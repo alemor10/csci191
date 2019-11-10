@@ -1,22 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:local="clr-namespace:SocialApp.ViewModels"
+             xmlns:views="clr-namespace:SocialApp.Views;assembly=SocialApp"
              x:Class="SocialApp.MainPage">
 
+    <views:HomePage Title="Home Page"/>
+    <views:DetailPage Title="Details Page" />
+    <views:FeedPage Title="Feed Page" />
 
-      <StackLayout Spacing="25" Padding="150">
-
-
-        <Button x:Name="takePhoto" Text="Take Photo"/>
-        <Button x:Name="pickPhoto" Text="Pick Photo"/>
-
-        <Image x:Name="image"/>
-
-      </StackLayout>
+    
 
 
-</ContentPage>
+</TabbedPage>

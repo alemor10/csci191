@@ -10,4 +10,16 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
+    <Folder Include="ModelViews\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Home.xaml" />
+    <EmbeddedResource Remove="DetailPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="DetailPage.xaml.cs" />
+  </ItemGroup>
 </Project>
