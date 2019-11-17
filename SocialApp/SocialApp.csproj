@@ -21,5 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="DetailPage.xaml.cs" />
+    <Compile Remove="EmptyClass.cs" />
+    <Compile Remove="Services\PickerService.cs" />
   </ItemGroup>
 </Project>
