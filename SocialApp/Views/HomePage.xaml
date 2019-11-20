@@ -20,7 +20,7 @@
 
 
     <Label Text="Hello this is going to be a Post" />
-    <Entry Text="{Binding PicturePost.PictureTitle, Mode=TwoWay}"
+    <Entry Text="{Binding PicturesViewModel.PictureTitle, Mode=TwoWay}"
            Placeholder="Post Title "/>
 
    <Picker x:Name="imageCategory"

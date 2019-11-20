@@ -10,6 +10,7 @@
     <views:HomePage Title="Home Page"/>
     <views:DetailPage Title="Details Page" />
     <views:FeedPage Title="Feed Page" />
+    <views:MyPage Title="HEWWO"/>
 
     
 

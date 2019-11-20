@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 
 
@@ -14,44 +15,46 @@ namespace SocialApp.ModelViews
 {
     public class PicturesViewModel : INotifyPropertyChanged
     {
-        private PicturePost post = new PicturePost();
+        public ObservableCollection<PicturePost> Posts { get; }
+        public Command SavePostCommand { get; }
 
-        public PicturePost PicturePost
+        public PicturesViewModel()
         {
-            get { return post; }
-            set
+          Posts = new ObservableCollection<PicturePost>();
+
+            SavePostCommand = new Command(() =>
             {
-                post = value;
-                OnPropertyChanged();
-            }
+                Posts.Add(new PicturePost { PictureTitle = PictureTitle ,PictureCategory = PictureCategory});
+                PictureTitle = string.Empty;
+            },
+            () => !string.IsNullOrEmpty(PictureTitle));
+
+            //EraseNotesCommand = new Command(() => Notes.Clear());
         }
-
-        public Command SaveCommand
-        {
-            get
-            {
-                return new Command(() =>
-                {
-                    if (PicturePost.PictureTitle == "Hello" && PicturePost.PictureCategory == "1")
-                    {
-                        App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Okay");
-                        // Open next page
-                    }
-                    else
-                    {
-                        App.Current.MainPage.DisplayAlert("Notification", "Error Login", "Okay");
-                    }
-                });
-            }
-        }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        string pictureTitle;
+        public string PictureTitle
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => pictureTitle;
+            set
+            {
+                pictureTitle = value;
+                PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(PictureTitle)));
+
+                SavePostCommand.ChangeCanExecute();
+            }
+        }
+        string pictureCategory;
+        public string PictureCategory
+        {
+            get => pictureCategory;
+            set
+            {
+                pictureCategory = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PictureCategory)));
+            }
         }
     }
 }
