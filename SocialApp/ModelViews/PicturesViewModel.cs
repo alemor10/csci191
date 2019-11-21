@@ -18,6 +18,7 @@ namespace SocialApp.ModelViews
         public ObservableCollection<PicturePost> Posts { get; }
         public Command SavePostCommand { get; }
 
+
         public PicturesViewModel()
         {
           Posts = new ObservableCollection<PicturePost>();
@@ -54,6 +55,28 @@ namespace SocialApp.ModelViews
             {
                 pictureCategory = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PictureCategory)));
+            }
+        }
+
+        double pictureRating;
+        public double PictureRating
+        {
+            get => pictureRating;
+            set
+            {
+                pictureRating = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PictureRating)));
+            }
+
+        }
+
+        byte[] pictureArray;
+        public byte[] PictureArray
+        {
+            get => pictureArray;
+            set
+            {
+                pictureArray = value
             }
         }
     }

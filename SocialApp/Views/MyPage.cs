@@ -4,6 +4,9 @@ using SocialApp.Models;
 using SocialApp.ModelViews;
 using Xamarin.Forms;
 
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System.IO;
 
 namespace SocialApp.Views
 {
@@ -14,19 +17,70 @@ namespace SocialApp.Views
             switch (e.Direction)
             {
                 case SwipeDirection.Left:
-                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Okay");
-
+                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Left1");
                     break;
                 case SwipeDirection.Right:
-                    // Handle the swipe
+                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Right2");
                     break;
             }
         }
+
         [Obsolete]
         public MyPage()
         {
             BackgroundColor = Color.PowderBlue;
             BindingContext = new PicturesViewModel();
+
+            byte[] myImage;
+
+            var image = new Image { Source = "waterfront.jpg" };
+            var pickImageButton = new Button
+            {
+                Text = "Pick Image",
+                TextColor = Color.Black,
+                BackgroundColor = Color.Gray,
+                Margin = new Thickness(15)
+
+            };
+            pickImageButton.Clicked += async (sender, args) =>
+            {
+                if (!CrossMedia.Current.IsPickPhotoSupported)
+                {
+                    await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                    return;
+                }
+                var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+                {
+                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+
+                });
+
+
+                if (file == null)
+                    return;
+
+                var tempstream = file.GetStream();
+
+                image.Source = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    file.Dispose();
+                    return stream;
+                });
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    file.GetStream().CopyTo(memoryStream);
+                    file.Dispose();
+                    myImage = memoryStream.ToArray();
+                }
+
+                if (myImage.Length == 0)
+                {
+                    await DisplayAlert("THE FUCK is GOING ON ", ":( Permission not granted to photos.", "OK");
+                }
+            };
+
 
             var categoryList = new List<string>();
             categoryList.Add("Business");
@@ -43,6 +97,12 @@ namespace SocialApp.Views
 
             };
             titleEntry.SetBinding(Entry.TextProperty, nameof(PicturesViewModel.PictureTitle));
+
+            var ratingLabel = new Label
+            {
+                BackgroundColor = Color.Aquamarine
+            };
+            ratingLabel.SetBinding(Label.TextProperty, nameof(PicturesViewModel.PictureRating));
 
             var categoryPicker = new Picker
             {
@@ -74,7 +134,6 @@ namespace SocialApp.Views
             leftSwipeGesture.Swiped += OnSwiped;
             var rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
             rightSwipeGesture.Swiped += OnSwiped;
-
             ratingView.GestureRecognizers.Add(leftSwipeGesture);
             ratingView.GestureRecognizers.Add(rightSwipeGesture);
 
@@ -84,8 +143,12 @@ namespace SocialApp.Views
             {
                 Children = {
                     new Label { Text = "Hello ContentPage" },
+                    image,
+                    
+                    pickImageButton,
                     titleEntry,
                     categoryPicker,
+                    ratingLabel,
                     ratingView,
                     saveButton,
                     collectionView
