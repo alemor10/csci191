@@ -8,8 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
-
-
+using System.IO;
 
 namespace SocialApp.ModelViews
 {
@@ -17,7 +16,6 @@ namespace SocialApp.ModelViews
     {
         public ObservableCollection<PicturePost> Posts { get; }
         public Command SavePostCommand { get; }
-
 
         public PicturesViewModel()
         {
@@ -31,6 +29,7 @@ namespace SocialApp.ModelViews
             () => !string.IsNullOrEmpty(PictureTitle));
 
             //EraseNotesCommand = new Command(() => Notes.Clear());
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -70,14 +69,20 @@ namespace SocialApp.ModelViews
 
         }
 
-        byte[] pictureArray;
-        public byte[] PictureArray
+        string picturePath;
+        public string PicturePath
         {
-            get => pictureArray;
+            get => picturePath;
             set
             {
-                pictureArray = value
+                picturePath = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PicturePath)));
+
             }
         }
+
+
+
+
     }
 }

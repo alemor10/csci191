@@ -12,6 +12,7 @@ namespace SocialApp.Views
 {
     public class MyPage : ContentPage
     {
+        
         void OnSwiped(object sender, SwipedEventArgs e)
         {
             switch (e.Direction)
@@ -25,13 +26,19 @@ namespace SocialApp.Views
             }
         }
 
+
+
+
         [Obsolete]
         public MyPage()
         {
+
+
+
             BackgroundColor = Color.PowderBlue;
             BindingContext = new PicturesViewModel();
 
-            byte[] myImage;
+            string imagePath = "";
 
             var image = new Image { Source = "waterfront.jpg" };
             var pickImageButton = new Button
@@ -59,26 +66,20 @@ namespace SocialApp.Views
                 if (file == null)
                     return;
 
-                var tempstream = file.GetStream();
+                imagePath = file.Path.ToString();
 
                 image.Source = ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
-                    file.Dispose();
                     return stream;
                 });
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    file.GetStream().CopyTo(memoryStream);
-                    file.Dispose();
-                    myImage = memoryStream.ToArray();
-                }
 
-                if (myImage.Length == 0)
-                {
-                    await DisplayAlert("THE FUCK is GOING ON ", ":( Permission not granted to photos.", "OK");
-                }
+
+
+                file.Dispose();
+
+
             };
 
 
@@ -90,13 +91,14 @@ namespace SocialApp.Views
             categoryList.Add("Waifus");
 
 
-            var titleEntry = new Entry
+            Entry titleEntry = new Entry
             {
                 Placeholder = "HEWWO",
                 Margin = new Thickness(10)
 
             };
             titleEntry.SetBinding(Entry.TextProperty, nameof(PicturesViewModel.PictureTitle));
+
 
             var ratingLabel = new Label
             {
@@ -144,7 +146,6 @@ namespace SocialApp.Views
                 Children = {
                     new Label { Text = "Hello ContentPage" },
                     image,
-                    
                     pickImageButton,
                     titleEntry,
                     categoryPicker,
@@ -156,6 +157,7 @@ namespace SocialApp.Views
                 }
             };
         }
+
         class NotesTemplate : DataTemplate
         {
             public NotesTemplate() : base(LoadTemplate)
@@ -170,6 +172,7 @@ namespace SocialApp.Views
 
                 var pictureCategory = new Label();
                 pictureCategory.SetBinding(Label.TextProperty, nameof(PicturePost.PictureCategory));
+
 
                 var frame = new Frame
                 {

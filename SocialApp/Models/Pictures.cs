@@ -15,7 +15,7 @@ namespace SocialApp.Models
         public string PictureLocation { get; set; }
         public string PictureTime { get; set; }
         public double PictureRating { get; set; }
-        public byte[] PictureArray { get; set  }
+        public string PicturePath { get; set; }
 
     }
 
