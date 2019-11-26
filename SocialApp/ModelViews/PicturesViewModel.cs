@@ -1,4 +1,4 @@
-﻿using SocialApp.Models; 
+﻿using SocialApp.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +25,13 @@ namespace SocialApp.ModelViews
             {
                 Posts.Add(new PicturePost { PictureTitle = PictureTitle ,PictureCategory = PictureCategory, PicturePath = PicturePath, PictureRating = PictureRating });
                 PictureTitle = string.Empty;
+
+                using (StreamWriter file = File.CreateText("PicDB.json"))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, Posts);
+                }
+
             },
             () => !string.IsNullOrEmpty(PictureTitle));
 

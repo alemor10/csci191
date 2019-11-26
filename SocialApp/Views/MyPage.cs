@@ -60,7 +60,7 @@ namespace SocialApp.Views
             var image = new Image { Aspect= Aspect.AspectFit };
 
             var filePath = new Editor
-            { 
+            {
                IsReadOnly = true
             };
             filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
@@ -91,7 +91,7 @@ namespace SocialApp.Views
 
                 //filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
                 filePath.SetValue(Editor.TextProperty, imagePath);
-              
+
 
                 image.Source = ImageSource.FromStream(() =>
                 {
@@ -99,6 +99,51 @@ namespace SocialApp.Views
                     return stream;
                 });
                 file.Dispose();
+            };
+
+            var takeImageButton = new Button
+            {
+                Text = "Take Image",
+                TextColor = Color.Black,
+                BackgroundColor = Color.Gray,
+                Margin = new Thickness(15)
+
+            };
+            takeImageButton.Clicked += async (sender, args) =>
+            {
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    await DisplayAlert("No camera", ":(No camera available.", "OK");
+                    return;
+                }
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                {
+                    Directory = "Test",
+                    SaveToAlbum = true,
+                    CompressionQuality = 75,
+                    CustomPhotoSize = 50,
+                    PhotoSize = PhotoSize.MaxWidthHeight,
+                    MaxWidthHeight = 1000,
+                    DefaultCamera = CameraDevice.Rear
+
+                });
+
+                if (file == null)
+                    return;
+
+                imagePath = file.Path.ToString();
+
+                //filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
+                filePath.SetValue(Editor.TextProperty, imagePath);
+
+                //await DisplayAlert("File Location", file.Path, "OK");
+
+                image.Source = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    file.Dispose();
+                    return stream;
+                });
             };
 
 
@@ -152,12 +197,11 @@ namespace SocialApp.Views
                     ratingLabel,
                     ratingView,
                     saveButton,
-                    
+
                 }
             };
         }
 
-     
+
     }
 }
-
