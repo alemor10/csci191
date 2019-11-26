@@ -29,6 +29,8 @@ namespace SocialApp.Views
 
 
 
+
+
         [Obsolete]
         public MyPage()
         {
@@ -40,7 +42,13 @@ namespace SocialApp.Views
 
             string imagePath = "";
 
-            var image = new Image { Source = "waterfront.jpg" };
+            var image = new Image { Aspect= Aspect.AspectFit };
+
+            var filePath = new Label
+            {
+               
+            };
+            filePath.SetBinding(Label.TextProperty, nameof(PicturesViewModel.PicturePath));
             var pickImageButton = new Button
             {
                 Text = "Pick Image",
@@ -68,18 +76,14 @@ namespace SocialApp.Views
 
                 imagePath = file.Path.ToString();
 
+                filePath.SetValue(Label.TextProperty, imagePath);
+
                 image.Source = ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
                     return stream;
                 });
-
-
-
-
                 file.Dispose();
-
-
             };
 
 
@@ -93,11 +97,12 @@ namespace SocialApp.Views
 
             Entry titleEntry = new Entry
             {
-                Placeholder = "HEWWO",
+                Placeholder = "Title",
                 Margin = new Thickness(10)
 
             };
             titleEntry.SetBinding(Entry.TextProperty, nameof(PicturesViewModel.PictureTitle));
+
 
 
             var ratingLabel = new Label
@@ -144,10 +149,11 @@ namespace SocialApp.Views
             Content = new StackLayout
             {
                 Children = {
-                    new Label { Text = "Hello ContentPage" },
                     image,
+                    filePath,
                     pickImageButton,
                     titleEntry,
+                    filePath,
                     categoryPicker,
                     ratingLabel,
                     ratingView,
@@ -167,13 +173,14 @@ namespace SocialApp.Views
 
             static StackLayout LoadTemplate()
             {
-                var textLabel = new Label();
-                textLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PictureTitle));
+                var titleLabel = new Label();
+                titleLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PictureTitle));
 
                 var pictureCategory = new Label();
                 pictureCategory.SetBinding(Label.TextProperty, nameof(PicturePost.PictureCategory));
 
-
+                var picturePathLabel = new Label();
+                picturePathLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PicturePath));
                 var frame = new Frame
                 {
                     BorderColor = Color.AntiqueWhite,
@@ -183,7 +190,8 @@ namespace SocialApp.Views
                     {
                         Children =
                         {
-                            textLabel,
+                            titleLabel,
+                            picturePathLabel,
                             pictureCategory
                         }
                     }

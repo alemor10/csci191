@@ -23,7 +23,7 @@ namespace SocialApp.ModelViews
 
             SavePostCommand = new Command(() =>
             {
-                Posts.Add(new PicturePost { PictureTitle = PictureTitle ,PictureCategory = PictureCategory});
+                Posts.Add(new PicturePost { PictureTitle = PictureTitle ,PictureCategory = PictureCategory, PicturePath = PicturePath });
                 PictureTitle = string.Empty;
             },
             () => !string.IsNullOrEmpty(PictureTitle));
@@ -80,6 +80,7 @@ namespace SocialApp.ModelViews
 
             }
         }
+
 
 
 
