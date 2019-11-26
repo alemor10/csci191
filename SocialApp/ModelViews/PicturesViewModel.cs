@@ -19,7 +19,7 @@ namespace SocialApp.ModelViews
 
         public PicturesViewModel()
         {
-          Posts = new ObservableCollection<PicturePost>();
+            Posts = new ObservableCollection<PicturePost>();
 
             SavePostCommand = new Command(() =>
             {

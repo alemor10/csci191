@@ -44,11 +44,10 @@ namespace SocialApp.Views
 
             var image = new Image { Aspect= Aspect.AspectFit };
 
-            var filePath = new Label
-            {
-               
+            var filePath = new Editor
+            { 
+               IsReadOnly = true
             };
-            filePath.SetBinding(Label.TextProperty, nameof(PicturesViewModel.PicturePath));
             var pickImageButton = new Button
             {
                 Text = "Pick Image",
@@ -76,7 +75,9 @@ namespace SocialApp.Views
 
                 imagePath = file.Path.ToString();
 
-                filePath.SetValue(Label.TextProperty, imagePath);
+                filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
+                filePath.SetValue(Editor.TextProperty, imagePath);
+              
 
                 image.Source = ImageSource.FromStream(() =>
                 {
@@ -155,8 +156,8 @@ namespace SocialApp.Views
                     titleEntry,
                     filePath,
                     categoryPicker,
-                    ratingLabel,
-                    ratingView,
+                    //ratingLabel,
+                    //ratingView,
                     saveButton,
                     collectionView
                     
@@ -181,7 +182,7 @@ namespace SocialApp.Views
 
                 var picturePathLabel = new Label();
                 picturePathLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PicturePath));
-                var frame = new Frame
+                Frame frame = new Frame
                 {
                     BorderColor = Color.AntiqueWhite,
                     Padding = 3,
