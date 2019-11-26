@@ -25,5 +25,7 @@
     <Compile Remove="DetailPage.xaml.cs" />
     <Compile Remove="EmptyClass.cs" />
     <Compile Remove="Services\PickerService.cs" />
+    <Compile Remove="Views\onClicked.cs" />
+    <Compile Remove="Views\DetailPage.xaml.cs" />
   </ItemGroup>
 </Project>

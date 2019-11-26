@@ -7,10 +7,10 @@
              xmlns:views="clr-namespace:SocialApp.Views;assembly=SocialApp"
              x:Class="SocialApp.MainPage">
 
-    <views:HomePage Title="Home Page"/>
-    <views:DetailPage Title="Details Page" />
-    <views:FeedPage Title="Feed Page" />
+
+    <views:CollectionPage Title="Collection" />
     <views:MyPage Title="HEWWO"/>
+
 
     
 

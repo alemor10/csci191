@@ -12,35 +12,50 @@ namespace SocialApp.Views
 {
     public class MyPage : ContentPage
     {
-        
-        void OnSwiped(object sender, SwipedEventArgs e)
-        {
-            switch (e.Direction)
-            {
-                case SwipeDirection.Left:
-                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Left1");
-                    break;
-                case SwipeDirection.Right:
-                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Right2");
-                    break;
-            }
-        }
-
-
-
-
 
 
         [Obsolete]
         public MyPage()
         {
-
-
-
             BackgroundColor = Color.PowderBlue;
             BindingContext = new PicturesViewModel();
 
             string imagePath = "";
+            double imageRating = 0.0;
+
+            var ratingLabel = new Editor
+            {
+                BackgroundColor = Color.Aquamarine,
+                IsReadOnly = true,
+                Keyboard = Keyboard.Numeric
+            };
+            ratingLabel.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PictureRating));
+
+            var ratingView = new BoxView { Color = Color.Teal };
+            var leftSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
+            leftSwipeGesture.Swiped += OnSwiped;
+            var rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
+            rightSwipeGesture.Swiped += OnSwiped;
+            ratingView.GestureRecognizers.Add(leftSwipeGesture);
+            ratingView.GestureRecognizers.Add(rightSwipeGesture);
+
+            void OnSwiped(object sender, SwipedEventArgs e)
+            {
+                switch (e.Direction)
+                {
+                    case SwipeDirection.Left:
+                        imageRating -= 0.5;
+                        var tempLeft = imageRating.ToString();
+                        ratingLabel.SetValue(Editor.TextProperty, tempLeft);
+                        break;
+                    case SwipeDirection.Right:
+                        imageRating += 0.5;
+                        var tempRight = imageRating.ToString();
+                        ratingLabel.SetValue(Editor.TextProperty, tempRight);
+                        break;
+                }
+            }
+
 
             var image = new Image { Aspect= Aspect.AspectFit };
 
@@ -48,6 +63,7 @@ namespace SocialApp.Views
             { 
                IsReadOnly = true
             };
+            filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
             var pickImageButton = new Button
             {
                 Text = "Pick Image",
@@ -68,14 +84,12 @@ namespace SocialApp.Views
                     PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
 
                 });
-
-
                 if (file == null)
                     return;
 
                 imagePath = file.Path.ToString();
 
-                filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
+                //filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
                 filePath.SetValue(Editor.TextProperty, imagePath);
               
 
@@ -105,13 +119,6 @@ namespace SocialApp.Views
             titleEntry.SetBinding(Entry.TextProperty, nameof(PicturesViewModel.PictureTitle));
 
 
-
-            var ratingLabel = new Label
-            {
-                BackgroundColor = Color.Aquamarine
-            };
-            ratingLabel.SetBinding(Label.TextProperty, nameof(PicturesViewModel.PictureRating));
-
             var categoryPicker = new Picker
             {
                 Title = "Category",
@@ -120,12 +127,6 @@ namespace SocialApp.Views
             categoryPicker.ItemsSource = categoryList;
             categoryPicker.SetBinding(Picker.SelectedItemProperty, nameof(PicturesViewModel.PictureCategory));
 
-
-            var collectionView = new CollectionView
-            {
-                ItemTemplate = new NotesTemplate()
-            };
-            collectionView.SetBinding(ItemsView.ItemsSourceProperty, nameof(PicturesViewModel.Posts));
 
             var saveButton = new Button
             {
@@ -136,14 +137,6 @@ namespace SocialApp.Views
 
             };
             saveButton.SetBinding(Button.CommandProperty, nameof(PicturesViewModel.SavePostCommand));
-
-            var ratingView = new BoxView { Color = Color.Teal };
-            var leftSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
-            leftSwipeGesture.Swiped += OnSwiped;
-            var rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
-            rightSwipeGesture.Swiped += OnSwiped;
-            ratingView.GestureRecognizers.Add(leftSwipeGesture);
-            ratingView.GestureRecognizers.Add(rightSwipeGesture);
 
             // Accomodate iPhone status bar.
             this.Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);
@@ -156,56 +149,15 @@ namespace SocialApp.Views
                     titleEntry,
                     filePath,
                     categoryPicker,
-                    //ratingLabel,
-                    //ratingView,
+                    ratingLabel,
+                    ratingView,
                     saveButton,
-                    collectionView
                     
                 }
             };
         }
 
-        class NotesTemplate : DataTemplate
-        {
-            public NotesTemplate() : base(LoadTemplate)
-            {
-
-            }
-
-            static StackLayout LoadTemplate()
-            {
-                var titleLabel = new Label();
-                titleLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PictureTitle));
-
-                var pictureCategory = new Label();
-                pictureCategory.SetBinding(Label.TextProperty, nameof(PicturePost.PictureCategory));
-
-                var picturePathLabel = new Label();
-                picturePathLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PicturePath));
-                Frame frame = new Frame
-                {
-                    BorderColor = Color.AntiqueWhite,
-                    Padding = 3,
-                    VerticalOptions = LayoutOptions.Center,
-                    Content = new StackLayout
-                    {
-                        Children =
-                        {
-                            titleLabel,
-                            picturePathLabel,
-                            pictureCategory
-                        }
-                    }
-                    
-                };
-
-                return new StackLayout
-                {
-                    Children = { frame },
-                    Padding = new Thickness(10)
-                };
-            }
-        }
+     
     }
 }
 
