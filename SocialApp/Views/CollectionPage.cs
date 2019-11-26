@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using SocialApp.Models;
 using SocialApp.ModelViews;
 using Xamarin.Forms;
+
+
 
 namespace SocialApp.Views
 {
@@ -10,7 +13,8 @@ namespace SocialApp.Views
         [Obsolete]
         public CollectionPage()
         {
-
+            BackgroundColor = Color.WhiteSmoke;
+            BindingContext = new PicturesViewModel();
             var collectionView = new CollectionView
             {
                 ItemTemplate = new NotesTemplate()
