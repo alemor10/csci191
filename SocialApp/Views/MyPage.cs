@@ -4,29 +4,89 @@ using SocialApp.Models;
 using SocialApp.ModelViews;
 using Xamarin.Forms;
 
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System.IO;
 
 namespace SocialApp.Views
 {
     public class MyPage : ContentPage
     {
+        
         void OnSwiped(object sender, SwipedEventArgs e)
         {
             switch (e.Direction)
             {
                 case SwipeDirection.Left:
-                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Okay");
-
+                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Left1");
                     break;
                 case SwipeDirection.Right:
-                    // Handle the swipe
+                    App.Current.MainPage.DisplayAlert("Notification", "Successfully Login", "Right2");
                     break;
             }
         }
+
+
+
+
+
+
         [Obsolete]
         public MyPage()
         {
+
+
+
             BackgroundColor = Color.PowderBlue;
             BindingContext = new PicturesViewModel();
+
+            string imagePath = "";
+
+            var image = new Image { Aspect= Aspect.AspectFit };
+
+            var filePath = new Editor
+            { 
+               IsReadOnly = true
+            };
+            var pickImageButton = new Button
+            {
+                Text = "Pick Image",
+                TextColor = Color.Black,
+                BackgroundColor = Color.Gray,
+                Margin = new Thickness(15)
+
+            };
+            pickImageButton.Clicked += async (sender, args) =>
+            {
+                if (!CrossMedia.Current.IsPickPhotoSupported)
+                {
+                    await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                    return;
+                }
+                var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+                {
+                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+
+                });
+
+
+                if (file == null)
+                    return;
+
+                imagePath = file.Path.ToString();
+
+                filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
+                filePath.SetValue(Editor.TextProperty, imagePath);
+              
+
+                image.Source = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+                file.Dispose();
+            };
+
 
             var categoryList = new List<string>();
             categoryList.Add("Business");
@@ -36,13 +96,21 @@ namespace SocialApp.Views
             categoryList.Add("Waifus");
 
 
-            var titleEntry = new Entry
+            Entry titleEntry = new Entry
             {
-                Placeholder = "HEWWO",
+                Placeholder = "Title",
                 Margin = new Thickness(10)
 
             };
             titleEntry.SetBinding(Entry.TextProperty, nameof(PicturesViewModel.PictureTitle));
+
+
+
+            var ratingLabel = new Label
+            {
+                BackgroundColor = Color.Aquamarine
+            };
+            ratingLabel.SetBinding(Label.TextProperty, nameof(PicturesViewModel.PictureRating));
 
             var categoryPicker = new Picker
             {
@@ -74,7 +142,6 @@ namespace SocialApp.Views
             leftSwipeGesture.Swiped += OnSwiped;
             var rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
             rightSwipeGesture.Swiped += OnSwiped;
-
             ratingView.GestureRecognizers.Add(leftSwipeGesture);
             ratingView.GestureRecognizers.Add(rightSwipeGesture);
 
@@ -83,16 +150,21 @@ namespace SocialApp.Views
             Content = new StackLayout
             {
                 Children = {
-                    new Label { Text = "Hello ContentPage" },
+                    image,
+                    filePath,
+                    pickImageButton,
                     titleEntry,
+                    filePath,
                     categoryPicker,
-                    ratingView,
+                    //ratingLabel,
+                    //ratingView,
                     saveButton,
                     collectionView
                     
                 }
             };
         }
+
         class NotesTemplate : DataTemplate
         {
             public NotesTemplate() : base(LoadTemplate)
@@ -102,13 +174,15 @@ namespace SocialApp.Views
 
             static StackLayout LoadTemplate()
             {
-                var textLabel = new Label();
-                textLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PictureTitle));
+                var titleLabel = new Label();
+                titleLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PictureTitle));
 
                 var pictureCategory = new Label();
                 pictureCategory.SetBinding(Label.TextProperty, nameof(PicturePost.PictureCategory));
 
-                var frame = new Frame
+                var picturePathLabel = new Label();
+                picturePathLabel.SetBinding(Label.TextProperty, nameof(PicturePost.PicturePath));
+                Frame frame = new Frame
                 {
                     BorderColor = Color.AntiqueWhite,
                     Padding = 3,
@@ -117,7 +191,8 @@ namespace SocialApp.Views
                     {
                         Children =
                         {
-                            textLabel,
+                            titleLabel,
+                            picturePathLabel,
                             pictureCategory
                         }
                     }
