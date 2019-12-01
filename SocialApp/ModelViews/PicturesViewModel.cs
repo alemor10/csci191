@@ -10,10 +10,14 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.IO;
 
+using SocialApp.Services;
+
 namespace SocialApp.ModelViews
 {
     public class PicturesViewModel : INotifyPropertyChanged
     {
+        private readonly IPicturePostService _picturePosts;
+        private bool _isLoading;
         public ObservableCollection<PicturePost> Posts { get; }
         public Command SavePostCommand { get; }
 
