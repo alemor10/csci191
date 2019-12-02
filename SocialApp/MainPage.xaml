@@ -10,9 +10,10 @@
 
     <views:CollectionPage Title="Collection" />
     <views:MyPage Title="HEWWO"/>
+    <views:PostPage Title="Post"/>
 
 
-    
+
 
 
 </TabbedPage>
