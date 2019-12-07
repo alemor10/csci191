@@ -19,7 +19,7 @@ namespace SocialApp.Views
             {
                 ItemTemplate = new NotesTemplate()
             };
-            collectionView.SetBinding(ItemsView.ItemsSourceProperty, nameof(PicturesViewModel.Posts));
+            collectionView.SetBinding(ItemsView.ItemsSourceProperty, nameof(PicturesViewModel.PicPosts));
 
             // Accomodate iPhone status bar.
             this.Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);

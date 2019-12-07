@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SocialApp.Models;
 using SocialApp.ModelViews;
 using Xamarin.Forms;
+using SQLite;
 
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -57,13 +58,59 @@ namespace SocialApp.Views
             }
 
 
-            var image = new Image { Aspect= Aspect.AspectFit };
+
+            var f = string.Empty;
+            var image = new Image { Aspect = Aspect.AspectFit };
 
             var filePath = new Editor
-            { 
-               IsReadOnly = true
+            {
+                IsReadOnly = true
             };
             filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
+            //makes the button to take a picture
+            var takeImageButton = new Button
+            {
+                Text = "Take Image",
+                TextColor = Color.Black,
+                BackgroundColor = Color.Gray,
+                Margin = new Thickness(15)
+
+            };
+            takeImageButton.SetBinding(Button.CommandProperty, nameof(PicturesViewModel.takeImageCommand));
+            //handles the  clicked event to take a photo
+            takeImageButton.Clicked += async (sender, args) =>
+            {
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    await DisplayAlert("No camera", ":(No camera available.", "OK");
+                    return;
+                }
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                {
+                    Directory = "Test",
+                    SaveToAlbum = true,
+                    CompressionQuality = 75,
+                    CustomPhotoSize = 15,
+                    PhotoSize = PhotoSize.Medium,
+                    //MaxWidthHeight = 2000,
+                    DefaultCamera = CameraDevice.Front
+                });
+
+                if (file == null)
+                    return;
+                await DisplayAlert("File Location", file.Path, "OK");
+                f = file.Path;
+                image.Source = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    file.Dispose();
+                    return stream;
+                });
+                return file.Path.ToString();
+            };
+            
+
+            // makes a button to pick the image 
             var pickImageButton = new Button
             {
                 Text = "Pick Image",
@@ -72,6 +119,7 @@ namespace SocialApp.Views
                 Margin = new Thickness(15)
 
             };
+            //handles the clicked event
             pickImageButton.Clicked += async (sender, args) =>
             {
                 if (!CrossMedia.Current.IsPickPhotoSupported)
@@ -91,8 +139,8 @@ namespace SocialApp.Views
 
                 //filePath.SetBinding(Editor.TextProperty, nameof(PicturesViewModel.PicturePath));
                 filePath.SetValue(Editor.TextProperty, imagePath);
-              
 
+                f = file.Path;
                 image.Source = ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
@@ -145,6 +193,7 @@ namespace SocialApp.Views
                 Children = {
                     image,
                     filePath,
+                    takeImageButton,
                     pickImageButton,
                     titleEntry,
                     filePath,
