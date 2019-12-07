@@ -26,9 +26,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignKey>Apple Development: sharondaredbaron@yahoo.com (U2QC7S69KA)</CodesignKey>
-    <CodesignProvision>iOS Team Provisioning Profile: com.CSci191T.SocialApp</CodesignProvision>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
