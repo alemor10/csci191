@@ -8,6 +8,7 @@ using SQLite;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.IO;
+using SocialApp.Services;
 
 namespace SocialApp.Views
 {
@@ -16,10 +17,16 @@ namespace SocialApp.Views
 
 
         [Obsolete]
-        public MyPage()
+        public MyPage(PicturesViewModel viewModel)
         {
+
+            var pictureStore = new SQLitePicturePosts(DependencyService.Get<ISQLiteDB>());
+            var pageService = new PageService();
+            Title = (viewModel.Phone == null) ? "New Picture" : "Edit Picture";
+            BindingContext = new PictureDetailViewModel(viewModel ?? new PicturesViewModel(), pictureStore, pageService);
+
             BackgroundColor = Color.PowderBlue;
-            BindingContext = new PicturesViewModel();
+          
 
             string imagePath = "";
             double imageRating = 0.0;

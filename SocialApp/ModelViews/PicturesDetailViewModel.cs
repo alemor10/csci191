@@ -81,12 +81,7 @@ namespace SocialApp.ModelViews
             if (file == null)
                 return;
 
-            //image.Source = ImageSource.FromStream(() =>
-            //{
-            //    var stream = file.GetStream();
-            //    file.Dispose();
-            //    return stream;
-            //});
+
         }
 
     }

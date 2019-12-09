@@ -9,6 +9,10 @@
 
    <ListView ItemsSource="{Binding Posts}" SelectedItem="{Binding SelectedPicture, Mode=TwoWay}" HasUnevenRows="True" SeparatorColor="Gray" ItemSelected="OnPictureSelected">
         <ListView.ItemTemplate>
+             <DataTemplate>
+                <ImageCell ImageSource="{Binding ProfileImage}" Text="{Binding PictureTitle}" Detail="{Binding Phone}" DetailColor="Black" TextColor="Red">
+                </ImageCell>
+            </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
 

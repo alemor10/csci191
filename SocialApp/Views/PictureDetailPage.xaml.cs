@@ -3,6 +3,9 @@ using SocialApp.ModelViews;
 using Xamarin.Forms;
 using System;
 
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+
 namespace SocialApp.Views
 {
     public partial class PicturesDetailPage : ContentPage
@@ -18,12 +21,6 @@ namespace SocialApp.Views
             BindingContext = new PictureDetailViewModel(viewModel ?? new PicturesViewModel(), pictureStore, pageService);
 
 
-
-
-
         }
-
-
-
     }
 }

@@ -40,5 +40,7 @@
 	<string>This app needs access to the photo gallery.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>App needs to add images to library</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Fill in a reason why your app needs access to location.</string>
 </dict>
 </plist>
