@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SocialApp.Views.PicturesDetailPage">
+   <TableView Intent="Form" Margin="16,0">
+		<TableRoot>
+               <TableSection>
+				<ViewCell>
+					<Button Text="Pick Photo" Command="{Binding PickPictureCommand}" />
+				</ViewCell>
+
+			    <ImageCell ImageSource="{Binding ProfileImage}" Text="{Binding PictureTitle}" DetailColor="Black" TextColor="Red"/>
+
+			</TableSection>
+			<TableSection Title="Photo">
+				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
+                <ViewCell>
+                <DatePicker HorizontalOptions="CenterAndExpand" Date="{Binding Path=Post.PictureTime}" />
+                </ViewCell>
+            </TableSection>
+            <TableSection>
+                <ViewCell>
+                <Picker
+                 ItemDisplayBinding="{Binding Path=Post.PictureCategory}"
+                 SelectedItem="{Binding Path=Post.PictureCategory}" >
+                <Picker.Items>
+                    <x:String>Business</x:String>
+                    <x:String>Educational</x:String>
+                    <x:String>Personal</x:String>
+                    <x:String>Rated R</x:String>
+                </Picker.Items>
+                </Picker>
+
+                </ViewCell>
+            </TableSection>
+			<TableSection Title="Rating">
+                <ViewCell>
+			    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="15,5,10,10">
+                   <Label Text="{Binding Content}">
+                       <Label.GestureRecognizers>
+                          <SwipeGestureRecognizer Direction="Right"/>
+                       </Label.GestureRecognizers>
+                   </Label>
+                </StackLayout>
+				</ViewCell>
+			</TableSection>
+			<TableSection>
+				<ViewCell>
+					<Button Text="Save" Command="{Binding SaveCommand}" />
+				</ViewCell>
+			</TableSection>
+		</TableRoot>
+	</TableView>
+</ContentPage>

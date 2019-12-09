@@ -11,15 +11,21 @@
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
     <PackageReference Include="Xamarin.HotReload" Version="1.5.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="ModelViews\" />
     <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Home.xaml" />
     <EmbeddedResource Remove="DetailPage.xaml" />
+    <EmbeddedResource Remove="Views\MyPage.xaml" />
+    <EmbeddedResource Remove="Views\CollectionView.xaml" />
+    <EmbeddedResource Remove="Views\PicturePostPage.xaml" />
+    <EmbeddedResource Remove="Views\PicturePostPage 2.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="DetailPage.xaml.cs" />
@@ -27,5 +33,13 @@
     <Compile Remove="Services\PickerService.cs" />
     <Compile Remove="Views\onClicked.cs" />
     <Compile Remove="Views\DetailPage.xaml.cs" />
+    <Compile Remove="Views\MyPage.xaml.cs" />
+    <Compile Remove="Views\CollectionView.xaml.cs" />
+    <Compile Remove="Views\CollectionPage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\PostView.xaml.cs">
+      <DependentUpon>PicturePostDetailPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
