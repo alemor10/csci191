@@ -4,21 +4,22 @@
              x:Class="SocialApp.Views.PicturesDetailPage">
    <TableView Intent="Form" Margin="16,0">
 		<TableRoot>
-               <TableSection>
+            <TableSection>
 				<ViewCell>
 					<Button Text="Pick Photo" Command="{Binding PickPictureCommand}" />
 				</ViewCell>
-
 			    <ImageCell ImageSource="{Binding ProfileImage}" Text="{Binding PictureTitle}" DetailColor="Black" TextColor="Red"/>
-
 			</TableSection>
-			<TableSection Title="Photo">
+
+            <TableSection Title="Photo Information">
 				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
                 <ViewCell>
                 <DatePicker HorizontalOptions="CenterAndExpand" Date="{Binding Path=Post.PictureTime}" />
                 </ViewCell>
             </TableSection>
-            <TableSection>
+
+
+            <TableSection Title="Category">
                 <ViewCell>
                 <Picker
                  ItemDisplayBinding="{Binding Path=Post.PictureCategory}"
@@ -30,25 +31,36 @@
                     <x:String>Rated R</x:String>
                 </Picker.Items>
                 </Picker>
-
                 </ViewCell>
             </TableSection>
+
 			<TableSection Title="Rating">
-                <ViewCell>
-			    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="15,5,10,10">
-                   <Label Text="{Binding Content}">
-                       <Label.GestureRecognizers>
-                          <SwipeGestureRecognizer Direction="Right"/>
-                       </Label.GestureRecognizers>
-                   </Label>
-                </StackLayout>
-				</ViewCell>
+               <ViewCell>
+                <Picker
+                 ItemDisplayBinding="{Binding Path=Post.PictureRating}"
+                 SelectedItem="{Binding Path=Post.PictureRating}" >
+                <Picker.Items>
+                    <x:String>1</x:String>
+                    <x:String>2</x:String>
+                    <x:String>3</x:String>
+                    <x:String>4</x:String>
+                    <x:String>5</x:String>
+                    <x:String>6</x:String>
+                    <x:String>7</x:String>
+                    <x:String>8</x:String>
+                </Picker.Items>
+                </Picker>
+              </ViewCell>
+			</TableSection>
+
+            <TableSection Title="Picture Location">
+                <EntryCell Label="Picture Location:" Text="{Binding Path=Post.PictureLocation}" />
 			</TableSection>
 			<TableSection>
 				<ViewCell>
 					<Button Text="Save" Command="{Binding SaveCommand}" />
 				</ViewCell>
-			</TableSection>
+		    </TableSection>
 		</TableRoot>
 	</TableView>
 </ContentPage>

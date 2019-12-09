@@ -26,6 +26,7 @@
     <EmbeddedResource Remove="Views\CollectionView.xaml" />
     <EmbeddedResource Remove="Views\PicturePostPage.xaml" />
     <EmbeddedResource Remove="Views\PicturePostPage 2.xaml" />
+    <EmbeddedResource Remove="MainPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="DetailPage.xaml.cs" />
@@ -36,6 +37,7 @@
     <Compile Remove="Views\MyPage.xaml.cs" />
     <Compile Remove="Views\CollectionView.xaml.cs" />
     <Compile Remove="Views\CollectionPage.cs" />
+    <Compile Remove="MainPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\PostView.xaml.cs">
