@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SocialApp.Views.PicturesDetailPage">
+   <TableView Intent="Form" Margin="16,0">
+		<TableRoot>
+			<TableSection Title="Name">
+				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
+			</TableSection>
+            <TableSection>
+                <ViewCell>
+                <Picker>
+                <Picker.Items>
+                    <x:String>Business</x:String>
+                    <x:String>Educational</x:String>
+                    <x:String>Personal</x:String>
+                    <x:String>Rated R</x:String>
+                </Picker.Items>
+                </Picker>
+
+                </ViewCell>
+            </TableSection>
+			<TableSection Title="Contact">
+				<EntryCell Label="Phone" Text="{Binding Path=Contact.Phone}" Keyboard="Numeric" />
+				<EntryCell Label="Email" Text="{Binding Path=Contact.Email}" Keyboard="Email" />
+			</TableSection>
+			<TableSection Title="Other">
+				<SwitchCell Text="Add to Favorites" On="{Binding Path=Contact.IsFavorite}" />
+			</TableSection>
+			<TableSection>
+				<ViewCell>
+					<Button Text="Save" Command="{Binding SaveCommand}" />
+				</ViewCell>
+			</TableSection>
+		</TableRoot>
+	</TableView>
+</ContentPage>

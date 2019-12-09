@@ -8,11 +8,11 @@
              x:Class="SocialApp.MainPage">
 
 
-    <views:CollectionPage Title="Collection" />
+   
     <views:MyPage Title="HEWWO"/>
-    <views:PostView Title="Social Feed"/>
 
-    
+ 
+
 
 
 </TabbedPage>

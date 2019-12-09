@@ -76,7 +76,7 @@ namespace SocialApp.Views
                 Margin = new Thickness(15)
 
             };
-            takeImageButton.SetBinding(Button.CommandProperty, nameof(PicturesViewModel.takeImageCommand));
+            //takeImageButton.SetBinding(Button.CommandProperty, nameof(PicturesViewModel.takeImageCommand));
             //handles the  clicked event to take a photo
             takeImageButton.Clicked += async (sender, args) =>
             {
@@ -106,7 +106,7 @@ namespace SocialApp.Views
                     file.Dispose();
                     return stream;
                 });
-                return file.Path.ToString();
+                return;
             };
             
 
@@ -184,7 +184,7 @@ namespace SocialApp.Views
                 Margin = new Thickness(15)
 
             };
-            saveButton.SetBinding(Button.CommandProperty, nameof(PicturesViewModel.SavePostCommand));
+            //saveButton.SetBinding(Button.CommandProperty, nameof(PicturesViewModel.SavePostCommand));
 
             // Accomodate iPhone status bar.
             this.Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);

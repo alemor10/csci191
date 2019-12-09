@@ -1,134 +1,104 @@
 ﻿using SocialApp.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using System.Collections.ObjectModel;
-using System.IO;
+
 
 namespace SocialApp.ModelViews
 {
-    public class PicturesViewModel : INotifyPropertyChanged
+    public class PicturesViewModel : BaseViewModel
     {
-        //public ObservableCollection<PicturePost> Posts { get; }
-        public Command SavePostCommand { get; }
-        public Command takeImageCommand { get; }
-        public PicturesViewModel()
+
+        public int ID { get; set; }
+        public PicturesViewModel() { }
+
+        public PicturesViewModel(PicturePost post)
         {
-            SavePostCommand = new Command(async () => await NewPost());
-            takeImageCommand = new Command(async () => PicturePath = Views.MyPage.);
-            //Posts = new ObservableCollection<PicturePost>();
-
-            /*SavePostCommand = new Command(() =>
-            {
-                Posts.Add(new PicturePost { PictureTitle = PictureTitle ,PictureCategory = PictureCategory, PicturePath = PicturePath, PictureRating = PictureRating });
-                PictureTitle = string.Empty;
-            },
-            () => !string.IsNullOrEmpty(PictureTitle));*/
-
-            //EraseNotesCommand = new Command(() => Notes.Clear());
-            //Posts = await App.Database.SavePicturePostAsync();
+            ID = post.ID;
+            _pictureTitle = post.PictureTitle;
+            _pictureCategory = post.PictureCategory;
+            _pictureLocation = post.PictureLocation ;
+            _pictureTime  = post.PictureTime;
+            _pictureRating = post.PictureRating;
+            _picturePath = post.PicturePath;
 
         }
-        
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        string pictureTitle;
+        private string _pictureTitle;
         public string PictureTitle
         {
-            get => pictureTitle;
+            get { return _pictureTitle; }
             set
             {
-                pictureTitle = value;
-                PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(PictureTitle)));
-
-                //SavePostCommand.ChangeCanExecute();
+                SetValue(ref _pictureTitle, value);
+                OnPropertyChanged(nameof(PictureTitle));
             }
         }
-        string pictureCategory;
+        private string _pictureCategory;
         public string PictureCategory
         {
-            get => pictureCategory;
+            get { return _pictureCategory; }
             set
             {
-                pictureCategory = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PictureCategory)));
+                SetValue(ref _pictureCategory, value);
+                OnPropertyChanged(nameof(PictureCategory));
             }
         }
 
-        double pictureRating;
+        private double  _pictureRating;
         public double PictureRating
         {
-            get => pictureRating;
+            get { return _pictureRating; }
             set
             {
-                pictureRating = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PictureRating)));
+                SetValue(ref _pictureRating, value);
             }
 
         }
 
-        string picturePath;
+        private string _picturePath;
         public string PicturePath
         {
-            get => picturePath;
+            get { return _picturePath; }
             set
             {
-                picturePath = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PicturePath)));
+                SetValue(ref _picturePath, value);
+
+            }
+        }
+        private string _pictureLocation ;
+        public string PictureLocation
+        {
+            get { return _pictureLocation; }
+            set
+            {
+                SetValue(ref _pictureLocation, value);
 
             }
         }
 
-        private List<PicturePost> picPosts;
-        public List<PicturePost> PicPosts
+        private string _pictureTime;
+      
+
+        public string PictureTime
         {
-            get { return picPosts; }
+            get { return _pictureTime; }
             set
             {
-                picPosts = value;
-                //OnPropertyChange();
+                SetValue(ref _pictureTime, value);
             }
         }
 
-        // keeps the posts updated to the current ones
-        private async Task CurrentPosts()
+        private string _phone;
+        public string Phone
         {
-            PicPosts = await App.Database.GetPicturePostAsync();
-        }
-
-
-        public async Task NewPost()
-        {
-            // get category information
-            
-
-            // get current time for post
-            //var dt = System.DateTime.Now;
-            //string dateTime = String.Format("{0:f}", dt);
-
-            // get current location for post
-            //var location = await Location.GetCurrentPosition();
-            //var placemark = await Location.ReverseGeocodeLocation(location);
-            //string address = placemark.FeatureName;
-
-            await App.Database.SavePicturePostAsync(new PicturePost()
+            get { return _phone; }
+            set
             {
-                PictureTitle = PictureTitle,
-                PictureCategory = PictureCategory,
-                PicturePath = PicturePath,
-                PictureRating = PictureRating
-            });
-            PictureTitle = string.Empty;
-            PicPosts = await App.Database.GetPicturePostAsync();
+                SetValue(ref _phone, value);
+            }
         }
-
-
 
     }
 }

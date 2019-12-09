@@ -1,9 +1,8 @@
 ﻿using System;
-using System.IO;
+using SocialApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using SocialApp.Models;
-using SQLite; 
+
 
 namespace SocialApp
 {
@@ -15,22 +14,7 @@ namespace SocialApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
-        }
-
-
-        static postDatabase database;
-        public static postDatabase Database
-        {
-          get
-          {
-            if (database == null)
-            {
-              database = new postDatabase(
-              Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "postSQLite.db3"));
-            }
-            return database;
-          }
+            MainPage = new NavigationPage(new PicturesPage());
         }
 
         protected override void OnStart()
