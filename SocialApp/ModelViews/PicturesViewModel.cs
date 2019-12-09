@@ -1,4 +1,5 @@
 ﻿using SocialApp.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -78,15 +79,16 @@ namespace SocialApp.ModelViews
             }
         }
 
-        private string _pictureTime;
+        private DateTime _pictureTime;
       
 
-        public string PictureTime
+        public DateTime PictureTime
         {
             get { return _pictureTime; }
             set
             {
                 SetValue(ref _pictureTime, value);
+                OnPropertyChanged(nameof(PictureTime));
             }
         }
 

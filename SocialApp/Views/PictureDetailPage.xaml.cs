@@ -18,7 +18,11 @@ namespace SocialApp.Views
             BindingContext = new PictureDetailViewModel(viewModel ?? new PicturesViewModel(), pictureStore, pageService);
 
 
+
+
+
         }
+
 
 
     }

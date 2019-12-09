@@ -4,12 +4,22 @@
              x:Class="SocialApp.Views.PicturesDetailPage">
    <TableView Intent="Form" Margin="16,0">
 		<TableRoot>
-			<TableSection Title="Name">
-				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
+               <TableSection>
+				<ViewCell>
+					<Button Text="Pick Photo" Command="{Binding PickPictureCommand}" />
+				</ViewCell>
 			</TableSection>
+			<TableSection Title="Photo">
+				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
+                <ViewCell>
+                <DatePicker HorizontalOptions="CenterAndExpand" Date="{Binding Path=Post.PictureTime}" />
+                </ViewCell>
+            </TableSection>
             <TableSection>
                 <ViewCell>
-                <Picker>
+                <Picker
+                 ItemDisplayBinding="{Binding Path=Post.PictureCategory}"
+                 SelectedItem="{Binding Path=Post.PictureCategory}" >
                 <Picker.Items>
                     <x:String>Business</x:String>
                     <x:String>Educational</x:String>
@@ -20,12 +30,16 @@
 
                 </ViewCell>
             </TableSection>
-			<TableSection Title="Contact">
-				<EntryCell Label="Phone" Text="{Binding Path=Contact.Phone}" Keyboard="Numeric" />
-				<EntryCell Label="Email" Text="{Binding Path=Contact.Email}" Keyboard="Email" />
-			</TableSection>
-			<TableSection Title="Other">
-				<SwitchCell Text="Add to Favorites" On="{Binding Path=Contact.IsFavorite}" />
+			<TableSection Title="Rating">
+                <ViewCell>
+			    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="15,5,10,10">
+                   <Label Text="{Binding Content}">
+                       <Label.GestureRecognizers>
+                          <SwipeGestureRecognizer Direction="Right"/>
+                       </Label.GestureRecognizers>
+                   </Label>
+                </StackLayout>
+				</ViewCell>
 			</TableSection>
 			<TableSection>
 				<ViewCell>

@@ -5,6 +5,9 @@ using SocialApp.Models;
 using SocialApp.ModelViews;
 using SocialApp.Services;
 using Xamarin.Forms;
+using Plugin.Media.Abstractions;
+using Plugin.Media;
+
 namespace SocialApp.ModelViews
 {
     public class PictureDetailViewModel
@@ -15,6 +18,7 @@ namespace SocialApp.ModelViews
         public PicturePost Post { get; private set; }
 
         public ICommand SaveCommand { get; private set; }
+        public ICommand PickPictureCommand { get; private set; }
 
 
         public PictureDetailViewModel(PicturesViewModel viewModel, IPicturePostStore pictureStore , IPageService pageService)
@@ -26,6 +30,7 @@ namespace SocialApp.ModelViews
             _pageService = pageService;
 
             SaveCommand = new Command(async () => await Save());
+            PickPictureCommand = new Command(async () => await PickPicture());
 
             Post = new PicturePost
             {
@@ -60,6 +65,29 @@ namespace SocialApp.ModelViews
             await _pageService.PopAsync();
         }
 
+        async Task PickPicture()
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                return;
+            }
+            var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+            {
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+
+            });
+
+
+            if (file == null)
+                return;
+
+            //image.Source = ImageSource.FromStream(() =>
+            //{
+            //    var stream = file.GetStream();
+            //    file.Dispose();
+            //    return stream;
+            //});
+        }
 
     }
 }

@@ -8,7 +8,8 @@
     </ContentPage.ToolbarItems>
 
    <ListView ItemsSource="{Binding Posts}" SelectedItem="{Binding SelectedPicture, Mode=TwoWay}" HasUnevenRows="True" SeparatorColor="Gray" ItemSelected="OnPictureSelected">
-
+        <ListView.ItemTemplate>
+        </ListView.ItemTemplate>
     </ListView>
 
 </ContentPage>
