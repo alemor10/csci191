@@ -8,7 +8,7 @@
 				<ViewCell>
 					<Button Text="Pick Photo" Command="{Binding PickPictureCommand}" />
 				</ViewCell>
-			    <ImageCell ImageSource="{Binding ProfileImage}" Text="{Binding PictureTitle}" DetailColor="Black" TextColor="Red"/>
+			    <ImageCell ImageSource="{Binding Path=Post.PicturePath}"  DetailColor="Black" TextColor="Red"/>
 			</TableSection>
 
             <TableSection Title="Photo Information">

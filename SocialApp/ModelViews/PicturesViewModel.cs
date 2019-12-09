@@ -58,8 +58,8 @@ namespace SocialApp.ModelViews
 
         }
 
-        private byte[] _picturePath;
-        public byte[] PicturePath
+        private string _picturePath;
+        public string PicturePath
         {
             get { return _picturePath; }
             set

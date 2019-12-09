@@ -90,13 +90,8 @@ namespace SocialApp.ModelViews
             {
                 return;
             }
+            Post.PicturePath = file.Path.ToString();
 
-            using (var memoryStream = new MemoryStream())
-            {
-                file.GetStream().CopyTo(memoryStream);
-                file.Dispose();
-                Post.PicturePath = memoryStream.ToArray();
-            }
            Post.PictureTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
             Plugin.Media.Abstractions.Location imageLocation;
