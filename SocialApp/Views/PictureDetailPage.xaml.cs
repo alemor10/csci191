@@ -10,6 +10,7 @@ namespace SocialApp.Views
 {
     public partial class PicturesDetailPage : ContentPage
     {
+        //constructor and connects the ModelViews to Views
         public PicturesDetailPage(PicturesViewModel viewModel)
         {
 
@@ -20,24 +21,6 @@ namespace SocialApp.Views
             Title = (viewModel.Phone == null) ? "New Picture" : "Edit Picture";
             BindingContext = new PictureDetailViewModel(viewModel ?? new PicturesViewModel(), pictureStore, pageService);
 
-        }
-        void OnSwiped(object sender, SwipedEventArgs e)
-        {
-            switch (e.Direction)
-            {
-                case SwipeDirection.Left:
-                    App.Current.MainPage.DisplayAlert("Notification1", "Successfully Login", "Okay");
-                    break;
-                case SwipeDirection.Right:
-                    App.Current.MainPage.DisplayAlert("Notification2", "Successfully Login", "Okay");
-                    break;
-                case SwipeDirection.Up:
-                    // Handle the swipe
-                    break;
-                case SwipeDirection.Down:
-                    // Handle the swipe
-                    break;
-            }
         }
     }
 }

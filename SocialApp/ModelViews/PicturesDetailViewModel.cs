@@ -15,17 +15,21 @@ namespace SocialApp.ModelViews
 {
     public class PictureDetailViewModel
     {
-        private readonly IPicturePostStore _pictureStore;
-        private readonly IPageService _pageService;
+        //declaration of services for this page 
+        private  IPicturePostStore _pictureStore;
+        private  IPageService _pageService;
 
+
+        //Post that is displayed
         public PicturePost Post { get; private set; }
 
+        //commands used in the page
+
         public ICommand SaveCommand { get; private set; }
-        public ICommand DeleteCommand { get; private set; }
         public ICommand PickPictureCommand { get; private set; }
         public ICommand SwipeCommand { get; private set; }
 
-
+        //constructor 
         public PictureDetailViewModel(PicturesViewModel viewModel, IPicturePostStore pictureStore , IPageService pageService)
         {
             if (viewModel == null)
@@ -39,7 +43,7 @@ namespace SocialApp.ModelViews
 
             SaveCommand = new Command(async () => await Save());
             PickPictureCommand = new Command(async () => await PickPicture());
-            DeleteCommand = new Command(async () => await Delete());
+
 
             Post = new PicturePost
             {
@@ -52,7 +56,7 @@ namespace SocialApp.ModelViews
                 PicturePath = viewModel.PicturePath
             };
         }
-        //&& String.IsNullOrWhiteSpace(Post.PictureCategory
+        //save post to db
         async Task Save()
         {
             if (String.IsNullOrWhiteSpace(Post.PictureTitle))
@@ -61,7 +65,7 @@ namespace SocialApp.ModelViews
                 return;
             }
 
-            if (Post.ID == 0)
+            if (Post.ID.ToString() == null )
             {
                 await _pictureStore.AddPicturePost(Post);
                 MessagingCenter.Send(this, Events.PostAdded, Post);
@@ -73,15 +77,9 @@ namespace SocialApp.ModelViews
             }
             await _pageService.PopAsync();
         }
+        
 
-        async Task Delete()
-        {
-
-            var contact = await _pictureStore.GetPicturePost(Post.ID);
-            await _pictureStore.DeletePicturePost(contact);
-        }
-
-
+        // handles the user picking a picture from their library 
         async Task PickPicture()
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
@@ -99,10 +97,11 @@ namespace SocialApp.ModelViews
             {
                 return;
             }
+            //grab the user path
             Post.PicturePath = file.Path.ToString();
-
+            // grab the time 
            Post.PictureTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-
+            //grab location
             Plugin.Media.Abstractions.Location imageLocation;
             imageLocation = new Plugin.Media.Abstractions.Location();
 

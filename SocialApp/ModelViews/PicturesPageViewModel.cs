@@ -12,25 +12,28 @@ namespace SocialApp.ModelViews
 {
     public class PicturesPageViewModel : BaseViewModel
     {
+        //declaration of services for this page
         private PicturesViewModel _selectedPost;
         private IPicturePostStore _postStore;
         private IPageService _pageService;
 
+        //check if page is loaded
         private bool _isDataLoaded;
 
 
 
-
+        //visible collection
         public ObservableCollection<PicturesViewModel> Posts
         { get;  set; }
         = new ObservableCollection<PicturesViewModel>();
 
+        //this is what happens when a post is selected
         public PicturesViewModel SelectedPost
         {
             get { return _selectedPost; }
             set { SetValue(ref _selectedPost, value); }
         }
-
+        //commands used in the page
         public ICommand LoadDataCommand { get; private set; }
         public ICommand LoadByTime { get; private set; }
         public ICommand LoadByRating { get; private set; }
@@ -40,7 +43,7 @@ namespace SocialApp.ModelViews
         public ICommand LoadAllPost { get; private set; }
 
 
-
+        
         public ICommand AddPictureCommand { get; private set; }
         public ICommand SelectPictureCommand { get; private set; }
         public ICommand DeletePictureCommand { get; private set; }
@@ -48,6 +51,7 @@ namespace SocialApp.ModelViews
         public ICommand ResetPictureCategoryCommand { get; private set; }
 
 
+        //constructor 
         public PicturesPageViewModel(IPicturePostStore pictureStore, IPageService pageService)
         {
             _postStore = pictureStore;
@@ -70,20 +74,22 @@ namespace SocialApp.ModelViews
             ResetPictureRatingCommand = new Command<PicturesViewModel>(async (obj) => await ResetPictureRating(obj));
             ResetPictureCategoryCommand = new Command<PicturesViewModel>(async (obj) => await ResetPictureCategory(obj));
 
+            //keep track of events
             MessagingCenter.Subscribe<PictureDetailViewModel, PicturePost>
                 (this, Events.PostAdded, OnPictureAdded);
-
+            //keep track of events
             MessagingCenter.Subscribe<PictureDetailViewModel, PicturePost>
             (this, Events.PictureUpdated, OnPictureUpdated);
         }
 
 
-
+        //when a picture gets added
         private void OnPictureAdded(PictureDetailViewModel source, PicturePost post)
         {
             Posts.Add(new PicturesViewModel(post));
         }
 
+        //on picture updaed
         private void OnPictureUpdated(PictureDetailViewModel source, PicturePost post)
         {
             var postInList = Posts.Single(c => c.ID== post.ID);
@@ -97,6 +103,7 @@ namespace SocialApp.ModelViews
             postInList.PictureTime = post.PictureTime;
         }
 
+        //load data to the collection
         private async Task LoadData()
         {
             if (_isDataLoaded)
@@ -107,6 +114,8 @@ namespace SocialApp.ModelViews
             foreach (PicturePost post in posts)
                 Posts.Add(new PicturesViewModel(post));
         }
+
+        //reload data to collection
         private async Task ReloadData()
         {
             var posts = await _postStore.GetPicturePostsAsync();
@@ -114,17 +123,22 @@ namespace SocialApp.ModelViews
                 Posts.Add(new PicturesViewModel(post));
         }
 
+
+        //load based on time
         private async Task LoadTime()
         {
             Posts = new ObservableCollection<PicturesViewModel>(from i in Posts orderby i.PictureRating select i);
         }
 
+        //load based on rating
         private async Task LoadRating()
         {
 
 
             
         }
+
+        //load based on business
         private async Task LoadBusiness()
         {
             foreach (var p in Posts)
@@ -139,7 +153,7 @@ namespace SocialApp.ModelViews
             }
 
         }
-
+        //load based on Personal
         private async Task LoadPersonal()
         {
             foreach (var p in Posts)
@@ -154,7 +168,7 @@ namespace SocialApp.ModelViews
             }
         }
 
-
+        //load based on Educational
         private async Task LoadEducational()
         {
             foreach (var p in Posts)
@@ -170,12 +184,13 @@ namespace SocialApp.ModelViews
 
         }
 
-
+        //when u add a post
         private async Task AddPicture()
         {
            await _pageService.PushAsync(new PicturesDetailPage(new PicturesViewModel()));
         }
 
+        //when u select a post
         private async Task SelectPicture(PicturesViewModel post)
         {
             if (post == null)
@@ -185,16 +200,19 @@ namespace SocialApp.ModelViews
             await _pageService.PushAsync(new PicturesDetailPage(post));
         }
 
+        //reset the picture rating
         private async Task ResetPictureRating (PicturesViewModel post)
         {
             post.PictureRating= 0;
         }
 
-
+        //reset the picture category
         private async Task ResetPictureCategory(PicturesViewModel post)
         {
             post.PictureCategory = "";
         }
+
+        //deleting a picture
 
         private async Task DeletePicture(PicturesViewModel picturesViewModel)
         {

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using SQLite;
 
+
+//model for pictures
 namespace SocialApp.Models
 {
     public class PicturePost

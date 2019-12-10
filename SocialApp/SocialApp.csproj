@@ -38,6 +38,7 @@
     <Compile Remove="Views\CollectionView.xaml.cs" />
     <Compile Remove="Views\CollectionPage.cs" />
     <Compile Remove="MainPage.xaml.cs" />
+    <Compile Remove="Models\postDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\PostView.xaml.cs">

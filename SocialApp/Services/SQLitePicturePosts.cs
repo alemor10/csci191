@@ -5,6 +5,8 @@ using SocialApp.Services;
 using SocialApp.ModelViews;
 using SQLite;
 
+
+//mySQL function
 namespace SocialApp.Services
 {
     public class SQLitePicturePosts : IPicturePostStore

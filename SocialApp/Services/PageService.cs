@@ -4,6 +4,7 @@ using Xamarin.Forms;
 
 using SocialApp.Services;
 
+//interface for PageService
 namespace SocialApp.Services
 {
     public interface IPageService

@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using SocialApp.Models;
 
+
+//interface for PicturePostStore
 namespace SocialApp.Services
 {
     public interface IPicturePostStore

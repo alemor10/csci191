@@ -3,6 +3,7 @@ using SocialApp.Services;
 using SocialApp.ModelViews;
 using Xamarin.Forms;
 
+//constructor and connects the ModelViews to Views
 namespace SocialApp.Views
 {
     public partial class PicturesPage : ContentPage

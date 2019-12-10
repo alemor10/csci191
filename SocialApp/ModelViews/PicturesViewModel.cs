@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-
+//this is where the property changes of a post are handled
 namespace SocialApp.ModelViews
 {
     public class PicturesViewModel : BaseViewModel

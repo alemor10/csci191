@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+//handles INotifyPropertyChanged for all pages of app can be used for any page that needs INotifyPropertyChanged
 namespace SocialApp.ModelViews
 {
     public class BaseViewModel : INotifyPropertyChanged

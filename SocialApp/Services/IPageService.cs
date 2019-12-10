@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using SocialApp.Services;
 using Xamarin.Forms;
 
+
+//handles page services such as updating and redirecting
 namespace SocialApp.Services
 {
     public class PageService : IPageService
