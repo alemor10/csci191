@@ -60,6 +60,9 @@
 				<ViewCell>
 					<Button Text="Save" Command="{Binding SaveCommand}" />
 				</ViewCell>
+                <ViewCell>
+					<Button Text="Delete" Command="{Binding DeleteCommand}" />
+				</ViewCell>
 		    </TableSection>
 		</TableRoot>
 	</TableView>

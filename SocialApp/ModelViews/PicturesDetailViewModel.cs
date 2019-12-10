@@ -21,6 +21,7 @@ namespace SocialApp.ModelViews
         public PicturePost Post { get; private set; }
 
         public ICommand SaveCommand { get; private set; }
+        public ICommand DeleteCommand { get; private set; }
         public ICommand PickPictureCommand { get; private set; }
         public ICommand SwipeCommand { get; private set; }
 
@@ -38,7 +39,7 @@ namespace SocialApp.ModelViews
 
             SaveCommand = new Command(async () => await Save());
             PickPictureCommand = new Command(async () => await PickPicture());
-            //SwipeCommand = new Command(async () => await Swipe());
+            DeleteCommand = new Command(async () => await Delete());
 
             Post = new PicturePost
             {
@@ -72,6 +73,14 @@ namespace SocialApp.ModelViews
             }
             await _pageService.PopAsync();
         }
+
+        async Task Delete()
+        {
+
+            var contact = await _pictureStore.GetPicturePost(Post.ID);
+            await _pictureStore.DeletePicturePost(contact);
+        }
+
 
         async Task PickPicture()
         {
