@@ -6,11 +6,11 @@
     x:Class="SocialApp.Views.PicturesPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddPictureCommand}" />
-        <ToolbarItem Text="Time"  Order="Secondary" />
-        <ToolbarItem Text="Top Five"  Order="Secondary" />
-        <ToolbarItem Text="Business"  Order="Secondary" />
-        <ToolbarItem Text="Personal"  Order="Secondary" />
-        <ToolbarItem Text="Educational"  Order="Secondary" />
+        <ToolbarItem  Command="{Binding LoadByTime}" Text="Time"  Order="Secondary" />
+        <ToolbarItem  Command="{Binding LoadByRating}"  Text="Top Five"  Order="Secondary" />
+        <ToolbarItem  Command="{Binding LoadByBusiness}"  Text="Business"  Order="Secondary" />
+        <ToolbarItem  Command="{Binding LoadByPersonal}" Text="Personal"  Order="Secondary" />
+        <ToolbarItem  Command="{Binding LoadByEducational}" Text="Educational"  Order="Secondary" />
     </ContentPage.ToolbarItems>
 
    <StackLayout>

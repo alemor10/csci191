@@ -29,6 +29,14 @@ namespace SocialApp.ModelViews
         }
 
         public ICommand LoadDataCommand { get; private set; }
+        public ICommand LoadByTime { get; private set; }
+        public ICommand LoadByRating { get; private set; }
+        public ICommand LoadByBusiness { get; private set; }
+        public ICommand LoadByPersonal { get; private set; }
+        public ICommand LoadByEducational { get; private set; }
+
+
+
         public ICommand AddPictureCommand { get; private set; }
         public ICommand SelectPictureCommand { get; private set; }
         public ICommand DeletePictureCommand { get; private set; }
@@ -42,6 +50,12 @@ namespace SocialApp.ModelViews
             _pageService = pageService;
 
             LoadDataCommand = new Command(async () => await LoadData());
+            LoadByTime = new Command(async () => await LoadTime());
+            LoadByRating = new Command(async () => LoadRating());
+            LoadByBusiness = new Command(async () => LoadBusiness());
+            LoadByPersonal = new Command(async () => LoadPersonal());
+            LoadByEducational = new Command(async () => LoadEducational());
+
             AddPictureCommand = new Command(async () => await AddPicture());
             SelectPictureCommand = new Command<PicturesViewModel>(async c => await SelectPicture(c));
             DeletePictureCommand = new Command<PicturesViewModel>(async c => await DeletePicture(c));
@@ -85,6 +99,33 @@ namespace SocialApp.ModelViews
             foreach (var post in posts)
                 Posts.Add(new PicturesViewModel(post));
         }
+
+        private async Task LoadTime()
+        {
+
+        }
+
+        private async Task LoadRating()
+        {
+
+        }
+
+        private async Task LoadBusiness()
+        {
+
+        }
+
+        private async Task LoadPersonal()
+        {
+
+        }
+
+
+        private async Task LoadEducational()
+        {
+
+        }
+
 
         private async Task AddPicture()
         {
