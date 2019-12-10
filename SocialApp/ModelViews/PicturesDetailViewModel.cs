@@ -7,6 +7,9 @@ using SocialApp.Services;
 using Xamarin.Forms;
 using Plugin.Media.Abstractions;
 using Plugin.Media;
+using System.IO;
+using Xamarin.Essentials;
+using System.Globalization;
 
 namespace SocialApp.ModelViews
 {
@@ -18,7 +21,9 @@ namespace SocialApp.ModelViews
         public PicturePost Post { get; private set; }
 
         public ICommand SaveCommand { get; private set; }
+        public ICommand DeleteCommand { get; private set; }
         public ICommand PickPictureCommand { get; private set; }
+        public ICommand SwipeCommand { get; private set; }
 
 
         public PictureDetailViewModel(PicturesViewModel viewModel, IPicturePostStore pictureStore , IPageService pageService)
@@ -26,11 +31,15 @@ namespace SocialApp.ModelViews
             if (viewModel == null)
                 throw new ArgumentNullException(nameof(viewModel));
 
+
+
+
             _pictureStore = pictureStore;
             _pageService = pageService;
 
             SaveCommand = new Command(async () => await Save());
             PickPictureCommand = new Command(async () => await PickPicture());
+            DeleteCommand = new Command(async () => await Delete());
 
             Post = new PicturePost
             {
@@ -65,6 +74,14 @@ namespace SocialApp.ModelViews
             await _pageService.PopAsync();
         }
 
+        async Task Delete()
+        {
+
+            var contact = await _pictureStore.GetPicturePost(Post.ID);
+            await _pictureStore.DeletePicturePost(contact);
+        }
+
+
         async Task PickPicture()
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
@@ -79,10 +96,47 @@ namespace SocialApp.ModelViews
 
 
             if (file == null)
+            {
                 return;
+            }
+            Post.PicturePath = file.Path.ToString();
 
+           Post.PictureTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+
+            Plugin.Media.Abstractions.Location imageLocation;
+            imageLocation = new Plugin.Media.Abstractions.Location();
+
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+                var location = await Geolocation.GetLocationAsync(request);
+
+                if (location != null)
+                {
+                    imageLocation.Latitude = location.Latitude;
+                    imageLocation.Longitude = location.Longitude;
+                    Post.PictureLocation = "(" + imageLocation.Latitude + ", " + imageLocation.Longitude + ")";
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                // Handle not enabled on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to get location
+            }
 
         }
+
 
     }
 }

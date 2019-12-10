@@ -47,8 +47,8 @@ namespace SocialApp.ModelViews
             }
         }
 
-        private double  _pictureRating;
-        public double PictureRating
+        private string  _pictureRating;
+        public string PictureRating
         {
             get { return _pictureRating; }
             set
@@ -79,10 +79,8 @@ namespace SocialApp.ModelViews
             }
         }
 
-        private DateTime _pictureTime;
-      
-
-        public DateTime PictureTime
+        private string  _pictureTime;
+        public string PictureTime
         {
             get { return _pictureTime; }
             set
