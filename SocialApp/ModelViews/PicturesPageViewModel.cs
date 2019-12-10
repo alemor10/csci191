@@ -19,7 +19,10 @@ namespace SocialApp.ModelViews
         private bool _isDataLoaded;
 
 
-        public ObservableCollection<PicturesViewModel> Posts { get;  set; }
+
+
+        public ObservableCollection<PicturesViewModel> Posts
+        { get;  set; }
         = new ObservableCollection<PicturesViewModel>();
 
         public PicturesViewModel SelectedPost
@@ -53,7 +56,7 @@ namespace SocialApp.ModelViews
             LoadDataCommand = new Command(async () => await LoadData());
             LoadAllPost = new Command (async () =>  await ReloadData());
 
-            LoadByTime = new Command(async () => await LoadTime());
+            LoadByTime = new Command(async () =>  LoadTime());
             LoadByRating = new Command(async () => LoadRating());
             LoadByBusiness = new Command(async () => LoadBusiness());
             LoadByPersonal = new Command(async () => LoadPersonal());
@@ -113,14 +116,15 @@ namespace SocialApp.ModelViews
 
         private async Task LoadTime()
         {
-
+            Posts = new ObservableCollection<PicturesViewModel>(from i in Posts orderby i.PictureRating select i);
         }
 
         private async Task LoadRating()
         {
 
-        }
 
+            
+        }
         private async Task LoadBusiness()
         {
             foreach (var p in Posts)
@@ -155,7 +159,7 @@ namespace SocialApp.ModelViews
         {
             foreach (var p in Posts)
             {
-                if(p.PictureCategory.Equals("Personal"))
+                if(p.PictureCategory.Equals("Educational"))
                 {
                 }
                 else
