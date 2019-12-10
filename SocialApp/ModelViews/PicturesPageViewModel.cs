@@ -58,7 +58,7 @@ namespace SocialApp.ModelViews
             _pageService = pageService;
 
             LoadDataCommand = new Command(async () => await LoadData());
-            LoadAllPost = new Command (async () =>  await ReloadData());
+            LoadAllPost = new Command(async () => await ReloadData());
 
             LoadByTime = new Command(async () =>  LoadTime());
             LoadByRating = new Command(async () => LoadRating());
@@ -243,6 +243,8 @@ namespace SocialApp.ModelViews
                 else
                 {
                     Posts.Remove(p);
+                    Posts.Add(p);
+
                 }
             }
 
@@ -258,6 +260,7 @@ namespace SocialApp.ModelViews
                 else
                 {
                     Posts.Remove(p);
+                    Posts.Add(p);
                 }
             }
         }
@@ -273,6 +276,7 @@ namespace SocialApp.ModelViews
                 else
                 {
                     Posts.Remove(p);
+                    Posts.Add(p);
                 }
             }
 
