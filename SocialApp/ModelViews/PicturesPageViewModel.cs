@@ -112,17 +112,49 @@ namespace SocialApp.ModelViews
 
         private async Task LoadBusiness()
         {
+            foreach (var p in Posts)
+            {
+                if (p.PictureCategory.Equals("Business"))
+                {
+
+                }
+                else
+                {
+                    Posts.Remove(p);
+                }
+            }
 
         }
 
         private async Task LoadPersonal()
         {
+            foreach (var p in Posts)
+            {
+                if(p.PictureCategory.Equals("Personal"))
+                {
 
+                }
+                else
+                {
+                    Posts.Remove(p);
+                }
+            }
         }
 
 
         private async Task LoadEducational()
         {
+            foreach (var p in Posts)
+            {
+                if (p.PictureCategory.Equals("Educational"))
+                {
+
+                }
+                else
+                {
+                    Posts.Remove(p);
+                }
+            }
 
         }
 
