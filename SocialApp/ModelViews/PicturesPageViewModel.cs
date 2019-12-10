@@ -102,7 +102,7 @@ namespace SocialApp.ModelViews
 
         private async Task ResetPictureRating (PicturesViewModel post)
         {
-            post.PictureRating= "";
+            post.PictureRating= 0;
         }
 
 

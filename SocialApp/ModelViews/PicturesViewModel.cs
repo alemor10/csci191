@@ -21,7 +21,7 @@ namespace SocialApp.ModelViews
             _pictureCategory = post.PictureCategory;
             _pictureLocation = post.PictureLocation ;
             _pictureTime  = post.PictureTime;
-            _pictureRating = post.PictureRating;
+            _pictureRating =post.PictureRating;
             _picturePath = post.PicturePath;
 
         }
@@ -47,8 +47,8 @@ namespace SocialApp.ModelViews
             }
         }
 
-        private string  _pictureRating;
-        public string PictureRating
+        private int  _pictureRating;
+        public int PictureRating
         {
             get { return _pictureRating; }
             set

@@ -22,6 +22,7 @@
 
             <TableSection Title="Photo Information">
 				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
+                <EntryCell Label="Picture Rating:"  IsEnabled="false" Text="{Binding Path=Post.PictureTime}" />
                 <ViewCell>
                 <DatePicker HorizontalOptions="CenterAndExpand" Date="{Binding Path=Post.PictureTime}" />
                 </ViewCell>
@@ -29,6 +30,7 @@
 
 
             <TableSection Title="Category">
+                <EntryCell Label="Picture Rating:"  IsEnabled="false" Text="{Binding Path=Post.PictureCategory}" />
                 <ViewCell>
                 <Picker
                  ItemDisplayBinding="{Binding Path=Post.PictureCategory}"
@@ -44,9 +46,9 @@
             </TableSection>
 
 			<TableSection Title="Rating">
+                <EntryCell Label="Picture Rating:"  IsEnabled="false" Text="{Binding Path=Post.PictureRating}" />
                <ViewCell>
                 <Picker
-                 ItemDisplayBinding="{Binding Path=Post.PictureRating}"
                  SelectedItem="{Binding Path=Post.PictureRating}" >
                 <Picker.Items>
                     <x:String>1</x:String>
@@ -63,14 +65,11 @@
 			</TableSection>
 
             <TableSection Title="Picture Location">
-                <EntryCell Label="Picture Location:" Text="{Binding Path=Post.PictureLocation}" />
+                <EntryCell Label="Picture Location:"  IsEnabled="false" Text="{Binding Path=Post.PictureLocation}" />
 			</TableSection>
 			<TableSection>
 				<ViewCell>
 					<Button Text="Save" Command="{Binding SaveCommand}" />
-				</ViewCell>
-                <ViewCell>
-					<Button Text="Delete" Command="{Binding DeleteCommand}" />
 				</ViewCell>
 		    </TableSection>
 		</TableRoot>

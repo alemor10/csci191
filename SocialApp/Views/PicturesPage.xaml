@@ -6,8 +6,14 @@
     x:Class="SocialApp.Views.PicturesPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddPictureCommand}" />
+        <ToolbarItem Text="Time"  Order="Secondary" />
+        <ToolbarItem Text="Top Five"  Order="Secondary" />
+        <ToolbarItem Text="Business"  Order="Secondary" />
+        <ToolbarItem Text="Personal"  Order="Secondary" />
+        <ToolbarItem Text="Educational"  Order="Secondary" />
     </ContentPage.ToolbarItems>
 
+   <StackLayout>
    <ListView ItemsSource="{Binding Posts}" SelectedItem="{Binding SelectedPicture, Mode=TwoWay}" HasUnevenRows="True" SeparatorColor="Gray" ItemSelected="OnPictureSelected">
         <ListView.ItemTemplate>
              <DataTemplate>
@@ -21,5 +27,6 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+    </StackLayout>
 
 </ContentPage>
