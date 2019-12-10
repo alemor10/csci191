@@ -11,9 +11,10 @@
    <ListView ItemsSource="{Binding Posts}" SelectedItem="{Binding SelectedPicture, Mode=TwoWay}" HasUnevenRows="True" SeparatorColor="Gray" ItemSelected="OnPictureSelected">
         <ListView.ItemTemplate>
              <DataTemplate>
-                <ImageCell ImageSource="{Binding PicturePath}" Text="{Binding PictureTitle}" Detail="{Binding Phone}" DetailColor="Black" TextColor="Red">
+                <ImageCell ImageSource="{Binding PicturePath}" Text="{Binding PictureTitle}" Detail="{Binding Phone}"   DetailColor="Black" TextColor="Red">
                     <ImageCell.ContextActions>
-                     
+                        <MenuItem Text="Reset Category" IsDestructive="true" Command="{Binding Source={x:Reference picturesPage}, Path=ViewModel.ResetPictureCategoryCommand}" CommandParameter="{Binding .}" />
+                        <MenuItem Text="Reset Rating" IsDestructive="true" Command="{Binding Source={x:Reference picturesPage}, Path=ViewModel.ResetPictureRatingCommand}" CommandParameter="{Binding .}" />
                         <MenuItem Text="Delete" IsDestructive="true" Command="{Binding Source={x:Reference picturesPage}, Path=ViewModel.DeletePictureCommand}" CommandParameter="{Binding .}" />
                     </ImageCell.ContextActions>
                 </ImageCell>

@@ -2,13 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SocialApp.Views.PicturesDetailPage">
+
+
    <TableView Intent="Form" Margin="16,0">
 		<TableRoot>
+            <TableSection>
+               <ViewCell>
+                 <StackLayout >
+                     <Image WidthRequest="90" HeightRequest="90" RotationY="180" Source="{Binding Path=Post.PicturePath}"></Image>
+                </StackLayout>
+               </ViewCell>
+            </TableSection>
             <TableSection>
 				<ViewCell>
 					<Button Text="Pick Photo" Command="{Binding PickPictureCommand}" />
 				</ViewCell>
-			    <ImageCell ImageSource="{Binding Path=Post.PicturePath}"  DetailColor="Black" TextColor="Red"/>
+			  
 			</TableSection>
 
             <TableSection Title="Photo Information">

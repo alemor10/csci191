@@ -32,6 +32,8 @@ namespace SocialApp.ModelViews
         public ICommand AddPictureCommand { get; private set; }
         public ICommand SelectPictureCommand { get; private set; }
         public ICommand DeletePictureCommand { get; private set; }
+        public ICommand ResetPictureRatingCommand { get; private set; }
+        public ICommand ResetPictureCategoryCommand { get; private set; }
 
 
         public PicturesPageViewModel(IPicturePostStore pictureStore, IPageService pageService)
@@ -43,6 +45,8 @@ namespace SocialApp.ModelViews
             AddPictureCommand = new Command(async () => await AddPicture());
             SelectPictureCommand = new Command<PicturesViewModel>(async c => await SelectPicture(c));
             DeletePictureCommand = new Command<PicturesViewModel>(async c => await DeletePicture(c));
+            ResetPictureRatingCommand = new Command<PicturesViewModel>(async (obj) => await ResetPictureRating(obj));
+            ResetPictureCategoryCommand = new Command<PicturesViewModel>(async (obj) => await ResetPictureCategory(obj));
 
             MessagingCenter.Subscribe<PictureDetailViewModel, PicturePost>
                 (this, Events.PostAdded, OnPictureAdded);
@@ -94,6 +98,17 @@ namespace SocialApp.ModelViews
 
             SelectedPost = null;
             await _pageService.PushAsync(new PicturesDetailPage(post));
+        }
+
+        private async Task ResetPictureRating (PicturesViewModel post)
+        {
+            post.PictureRating= "";
+        }
+
+
+        private async Task ResetPictureCategory(PicturesViewModel post)
+        {
+            post.PictureCategory = "";
         }
 
         private async Task DeletePicture(PicturesViewModel picturesViewModel)
