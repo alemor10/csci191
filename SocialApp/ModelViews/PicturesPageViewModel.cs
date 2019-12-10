@@ -10,7 +10,7 @@ using SocialApp.Services;
 using Xamarin.Forms;
 namespace SocialApp.ModelViews
 {
-    public class PicturesPageViewModel:BaseViewModel
+    public class PicturesPageViewModel : BaseViewModel
     {
         private PicturesViewModel _selectedPost;
         private IPicturePostStore _postStore;
@@ -19,7 +19,7 @@ namespace SocialApp.ModelViews
         private bool _isDataLoaded;
 
 
-        public ObservableCollection<PicturesViewModel> Posts { get; private set; }
+        public ObservableCollection<PicturesViewModel> Posts { get;  set; }
         = new ObservableCollection<PicturesViewModel>();
 
         public PicturesViewModel SelectedPost
@@ -34,6 +34,7 @@ namespace SocialApp.ModelViews
         public ICommand LoadByBusiness { get; private set; }
         public ICommand LoadByPersonal { get; private set; }
         public ICommand LoadByEducational { get; private set; }
+        public ICommand LoadAllPost { get; private set; }
 
 
 
@@ -50,11 +51,15 @@ namespace SocialApp.ModelViews
             _pageService = pageService;
 
             LoadDataCommand = new Command(async () => await LoadData());
+            LoadAllPost = new Command (async () =>  await ReloadData());
+
             LoadByTime = new Command(async () => await LoadTime());
             LoadByRating = new Command(async () => LoadRating());
             LoadByBusiness = new Command(async () => LoadBusiness());
             LoadByPersonal = new Command(async () => LoadPersonal());
             LoadByEducational = new Command(async () => LoadEducational());
+           
+
 
             AddPictureCommand = new Command(async () => await AddPicture());
             SelectPictureCommand = new Command<PicturesViewModel>(async c => await SelectPicture(c));
@@ -96,7 +101,13 @@ namespace SocialApp.ModelViews
 
             _isDataLoaded = true;
             var posts = await _postStore.GetPicturePostsAsync();
-            foreach (var post in posts)
+            foreach (PicturePost post in posts)
+                Posts.Add(new PicturesViewModel(post));
+        }
+        private async Task ReloadData()
+        {
+            var posts = await _postStore.GetPicturePostsAsync();
+            foreach (PicturePost post in posts)
                 Posts.Add(new PicturesViewModel(post));
         }
 
@@ -116,7 +127,6 @@ namespace SocialApp.ModelViews
             {
                 if (p.PictureCategory.Equals("Business"))
                 {
-
                 }
                 else
                 {
@@ -132,7 +142,6 @@ namespace SocialApp.ModelViews
             {
                 if(p.PictureCategory.Equals("Personal"))
                 {
-
                 }
                 else
                 {
@@ -146,9 +155,8 @@ namespace SocialApp.ModelViews
         {
             foreach (var p in Posts)
             {
-                if (p.PictureCategory.Equals("Educational"))
+                if(p.PictureCategory.Equals("Personal"))
                 {
-
                 }
                 else
                 {

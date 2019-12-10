@@ -6,6 +6,7 @@
     x:Class="SocialApp.Views.PicturesPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddPictureCommand}" />
+        <ToolbarItem Text="Reload" Command="{Binding LoadAllPost}" />
         <ToolbarItem  Command="{Binding LoadByTime}" Text="Time"  Order="Secondary" />
         <ToolbarItem  Command="{Binding LoadByRating}"  Text="Top Five"  Order="Secondary" />
         <ToolbarItem  Command="{Binding LoadByBusiness}"  Text="Business"  Order="Secondary" />
