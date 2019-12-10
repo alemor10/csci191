@@ -65,7 +65,7 @@ namespace SocialApp.ModelViews
                 return;
             }
 
-            if (Post.ID.ToString() == null )
+            if (Post.ID == 0)
             {
                 await _pictureStore.AddPicturePost(Post);
                 MessagingCenter.Send(this, Events.PostAdded, Post);
@@ -73,7 +73,7 @@ namespace SocialApp.ModelViews
             else
             {
                 await _pictureStore.UpdatePicturePost(Post);
-                MessagingCenter.Send(this, Events.PostAdded, Post);
+                MessagingCenter.Send(this, Events.PictureUpdated, Post);
             }
             await _pageService.PopAsync();
         }

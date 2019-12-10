@@ -127,7 +127,7 @@ namespace SocialApp.ModelViews
         //load based on time
         private async Task LoadTime()
         {
-            Posts = new ObservableCollection<PicturesViewModel>(from i in Posts orderby i.PictureRating select i);
+            Posts = new ObservableCollection<PicturesViewModel>(Posts.OrderBy(x => x.PictureTime).ToList());
         }
 
         //load based on rating
@@ -319,7 +319,7 @@ namespace SocialApp.ModelViews
             {
                 Posts.Remove(picturesViewModel);
 
-                var contact = await _postStore.GetPicturePost(picturesViewModel.ID);
+                PicturePost contact = await _postStore.GetPicturePost(picturesViewModel.ID);
                 await _postStore.DeletePicturePost(contact);
             }
         }

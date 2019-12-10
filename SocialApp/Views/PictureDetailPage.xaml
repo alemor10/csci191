@@ -22,7 +22,7 @@
 
             <TableSection Title="Photo Information">
 				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
-                <EntryCell Label="Picture Rating:"  IsEnabled="false" Text="{Binding Path=Post.PictureTime}" />
+                <EntryCell Label="Picture Time:"  IsEnabled="false" Text="{Binding Path=Post.PictureTime}" />
                 <ViewCell>
                 <DatePicker HorizontalOptions="CenterAndExpand" Date="{Binding Path=Post.PictureTime}" />
                 </ViewCell>
@@ -30,7 +30,7 @@
 
 
             <TableSection Title="Category">
-                <EntryCell Label="Picture Rating:"  IsEnabled="false" Text="{Binding Path=Post.PictureCategory}" />
+                <EntryCell Label="Picture Category:"  IsEnabled="false" Text="{Binding Path=Post.PictureCategory}" />
                 <ViewCell>
                 <Picker
                  ItemDisplayBinding="{Binding Path=Post.PictureCategory}"
