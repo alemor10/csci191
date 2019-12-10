@@ -65,7 +65,7 @@ namespace SocialApp.ModelViews
             LoadByBusiness = new Command(async () => LoadBusiness());
             LoadByPersonal = new Command(async () => LoadPersonal());
             LoadByEducational = new Command(async () => LoadEducational());
-           
+
 
 
             AddPictureCommand = new Command(async () => await AddPicture());
@@ -133,9 +133,103 @@ namespace SocialApp.ModelViews
         //load based on rating
         private async Task LoadRating()
         {
+            var counter = 0;
 
-
-            
+            foreach(var p in Posts)
+            {
+                if (p.PictureRating.Equals(8))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(8))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else if(p.PictureRating.Equals(7))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(7))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else if (p.PictureRating.Equals(6))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(6))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else if (p.PictureRating.Equals(5))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(5))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else if (p.PictureRating.Equals(4))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(4))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else if (p.PictureRating.Equals(3))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(3))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else if (p.PictureRating.Equals(2))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(2))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else if (p.PictureRating.Equals(1))
+                {
+                    if (counter > 4 && p.PictureRating.Equals(1))
+                    {
+                        Posts.Remove(p);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+                else
+                {
+                    Posts.Remove(p);
+                }
+            }
         }
 
         //load based on business
@@ -226,7 +320,7 @@ namespace SocialApp.ModelViews
             }
         }
 
- 
+
 
 
     }
