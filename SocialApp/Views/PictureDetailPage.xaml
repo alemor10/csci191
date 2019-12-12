@@ -14,11 +14,13 @@
                </ViewCell>
             </TableSection>
             <TableSection>
-				<ViewCell>
-					<Button Text="Pick Photo" Command="{Binding PickPictureCommand}" />
-				</ViewCell>
-			  
-			</TableSection>
+                <ViewCell>
+                    <Button Text="Take Photo" Command="{Binding TakePictureCommand}" />
+                </ViewCell>
+                <ViewCell>
+                    <Button Text="Pick Photo" Command="{Binding PickPictureCommand}" />
+                </ViewCell>
+            </TableSection>
 
             <TableSection Title="Photo Information">
 				<EntryCell Label="Picture Title" Text="{Binding Path=Post.PictureTitle}" />
