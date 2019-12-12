@@ -83,7 +83,7 @@ namespace SocialApp.Views
                 Margin = new Thickness(15)
 
             };
-            //takeImageButton.SetBinding(Button.CommandProperty, nameof(PicturesViewModel.takeImageCommand));
+            takeImageButton.SetBinding(Button.CommandProperty, nameof(PictureDetailViewModel.TakeImageCommand));
             //handles the  clicked event to take a photo
             takeImageButton.Clicked += async (sender, args) =>
             {
