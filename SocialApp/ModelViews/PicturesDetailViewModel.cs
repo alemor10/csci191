@@ -28,6 +28,7 @@ namespace SocialApp.ModelViews
         public ICommand SaveCommand { get; private set; }
         public ICommand PickPictureCommand { get; private set; }
         public ICommand SwipeCommand { get; private set; }
+        public ICommand TakeImageCommand { get; private set; }
 
         //constructor 
         public PictureDetailViewModel(PicturesViewModel viewModel, IPicturePostStore pictureStore , IPageService pageService)
@@ -43,6 +44,7 @@ namespace SocialApp.ModelViews
 
             SaveCommand = new Command(async () => await Save());
             PickPictureCommand = new Command(async () => await PickPicture());
+            TakeImageCommand = new Command(async () => await TakePicture());
 
 
             Post = new PicturePost
@@ -56,6 +58,24 @@ namespace SocialApp.ModelViews
                 PicturePath = viewModel.PicturePath
             };
         }
+        //Take Picture
+        async Task TakePicture()
+        {
+            if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
+            {
+                // Supply media options for saving our photo after it's taken.
+                var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                {
+                    Directory = "Receipts",
+                    Name = $"{DateTime.UtcNow}.jpg"
+                };
+
+                // Take a photo of the business receipt.
+                var file = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
+            }
+        }
+    
+
         //save post to db
         async Task Save()
         {
