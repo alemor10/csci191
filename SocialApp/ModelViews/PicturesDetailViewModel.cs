@@ -10,6 +10,7 @@ using Plugin.Media;
 using System.IO;
 using Xamarin.Essentials;
 using System.Globalization;
+using Plugin.Permissions;
 
 namespace SocialApp.ModelViews
 {
@@ -61,18 +62,26 @@ namespace SocialApp.ModelViews
         //Take Picture
         async Task TakePicture()
         {
-            if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
-            {
-                // Supply media options for saving our photo after it's taken.
-                var mediaOptions = new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                {
-                    Directory = "Receipts",
-                    Name = $"{DateTime.UtcNow}.jpg"
-                };
+            var image = new Image { Aspect = Aspect.AspectFit };
+            await CrossMedia.Current.Initialize();
 
-                // Take a photo of the business receipt.
-                var file = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
-            }
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                Directory = "Social App",
+                Name = $"{DateTime.UtcNow}.jpg"
+            });
+
+            if (file == null)
+                return;
+
+            image.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                file.Dispose();
+                return stream;
+            });
+
+
         }
     
 
