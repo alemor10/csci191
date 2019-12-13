@@ -19,6 +19,7 @@ namespace SocialApp.ModelViews
         //declaration of services for this page 
         private  IPicturePostStore _pictureStore;
         private  IPageService _pageService;
+        private Image image = new Image { Aspect = Aspect.AspectFit };
 
 
         //Post that is displayed
@@ -62,7 +63,7 @@ namespace SocialApp.ModelViews
         //Take Picture
         async Task TakePicture()
         {
-            var image = new Image { Aspect = Aspect.AspectFit };
+            
             await CrossMedia.Current.Initialize();
 
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
