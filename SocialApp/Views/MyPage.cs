@@ -10,6 +10,7 @@ using Plugin.Media.Abstractions;
 using System.IO;
 using SocialApp.Services;
 
+
 namespace SocialApp.Views
 {
     public class MyPage : ContentPage
